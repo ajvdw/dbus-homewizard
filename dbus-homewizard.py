@@ -105,7 +105,7 @@ class DbusHomewizardEnergyP1Service:
         
         # check for response
         if not meter_r:
-            raise ConnectionError("No response from Home Wizzard Energy - %s" % (URL))
+            raise ConnectionError("No response from Homewizard Energy - %s" % (URL))
         
         meter_data = meter_r.json()     
         
