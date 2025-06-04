@@ -22,7 +22,7 @@ With the scripts in this repo it should be easy possible to install, uninstall, 
 ### Details / Process
 So what is the script doing:
 - Running as a service
-- connecting to DBus of the Venus OS `com.victronenergy.grid.http_40` or `com.victronenergy.pvinverter.http_40`
+- connecting to DBus of the Venus OS `com.victronenergy.grid.http_40` 
 - After successful DBus connection P1 meter is accessed via REST-API - simply the /status is called and a JSON is returned with all details
 - Paths are added to the DBus with default value 0 - including some settings like name, etc
 - After that a "loop" is started which pulls P1 data every 750ms from the REST-API and updates the values in the DBus
