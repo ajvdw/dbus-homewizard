@@ -23,7 +23,7 @@ from vedbus import VeDbusService
 
 
 class DbusHomewizardEnergyP1Service:
-    def __init__(self, paths, productname='Homewizard P1', connection='Homewizard P1 HTTP JSOn service'):
+    def __init__(self, paths, productname='Homewizard P1', connection='Homewizard P1 HTTP JSON service'):
         config = self._getConfig()
         deviceinstance = int(config['DEFAULT']['DeviceInstance'])
         customname = config['DEFAULT']['CustomName']
