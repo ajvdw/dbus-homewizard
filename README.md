@@ -14,10 +14,10 @@ With the scripts in this repo it should be easy possible to install, uninstall, 
 - Homewizard Energy P1 with latest firmware 
   - 1 or 3-Phase installation (normal for Netherlands)
   - Connected to network
-  - IP 192.168.2.13/24  
+  - IP 192.168.1.240/24  
 - Victron Energy Multiplus II GX with Venus OS
   - Connected to network
-  - IP 192.168.2.20/24
+  - IP 192.168.2.251/24 (venus.local)
 
 ### Details / Process
 So what is the script doing:
