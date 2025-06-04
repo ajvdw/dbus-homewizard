@@ -54,7 +54,7 @@ rm main.zip
 ### Change config.ini
 Within the project there is a file `/data/dbus-Home-Wizzard-Energy-P1/config.ini` - just change the values - most important is the host, username and password in section "ONPREMISE". More details below:
 
-| Section  | Config vlaue | Explanation |
+| Section  | Config value | Description |
 | ------------- | ------------- | ------------- |
 | DEFAULT  | Host | IP or hostname of Homewizard P1 meter |
 | DEFAULT  | SignOfLifeLog  | Time in minutes how often a status is added to the log-file `current.log` with log-level INFO |
