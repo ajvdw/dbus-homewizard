@@ -37,22 +37,22 @@ Thats it 😄
 
 ## Install & Configuration
 ### Get the code
-Just grap a copy of the main branche and copy them to `/data/dbus-Home-Wizzard-Energy-P1`.
+Just grap a copy of the main branche and copy them to `/data/dbus-homewizard-p1`.
 After that call the install.sh script.
 
 The following script should do everything for you:
 ```
-wget https://github.com/ajvdw/dbus-homewizard/archive/refs/heads/main.zip
-unzip main.zip "dbus-homewizard-main/*" -d /data
-mv /data/dbus-homewizard-main /data/dbus-homewizard
-chmod a+x /data/dbus-homewizrd/install.sh
-/data/dbus-homewizard/install.sh
+wget https://github.com/ajvdw/dbus-homewizard-p1/archive/refs/heads/main.zip
+unzip main.zip "dbus-homewizard-p1-main/*" -d /data
+mv /data/dbus-homewizard-p1-main /data/dbus-homewizard-p1
+chmod a+x /data/dbus-homewizard-p1/install.sh
+/data/dbus-homewizard-p1/install.sh
 rm main.zip
 ```
 ⚠️ Check configuration after that - because service is already installed an running and with wrong connection data (host, username, pwd) you will spam the log-file
 
 ### Change config.ini
-Within the project there is a file `/data/dbus-Home-Wizzard-Energy-P1/config.ini` - just change the values - most important is the host, username and password in section "ONPREMISE". More details below:
+Within the project there is a file `/data/dbus-homewizard-p1/config.ini` - just change the values - most important is the host, username and password in section "ONPREMISE". More details below:
 
 | Section  | Config value | Description |
 | ------------- | ------------- | ------------- |
