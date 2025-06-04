@@ -22,24 +22,14 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__), '/opt/victronenergy/d
 from vedbus import VeDbusService
 
 
-class DbusHomeWizzardEnergyP1Service:
-    def __init__(self, paths, productname='Home Wizzard Energy P1', connection='Home Wizzard Energy P1 HTTP JSOn service'):
+class DbusHomewizardEnergyP1Service:
+    def __init__(self, paths, productname='Homewizard P1', connection='Homewizard P1 HTTP JSOn service'):
         config = self._getConfig()
         deviceinstance = int(config['DEFAULT']['DeviceInstance'])
         customname = config['DEFAULT']['CustomName']
-        role = config['DEFAULT']['Role']
 
-        allowed_roles = ['pvinverter','grid']
-        if role in allowed_roles:
-            servicename = 'com.victronenergy.' + role
-        else:
-            logging.error("Configured Role: %s is not in the allowed list")
-            exit()
-
-        if role == 'pvinverter':
-            productid = 0xA144
-        else:
-            productid = 45069
+        servicename = 'com.victronenergy.grid'
+        productid = 45069
 
         self._dbusservice = VeDbusService("{}.http_{:02d}".format(servicename, deviceinstance))
         self._paths = paths
@@ -58,8 +48,8 @@ class DbusHomeWizzardEnergyP1Service:
         self._dbusservice.add_path('/FirmwareVersion', 0.2)
         self._dbusservice.add_path('/HardwareVersion', 0)
         self._dbusservice.add_path('/Connected', 1)
-        self._dbusservice.add_path('/Role', role)
-        self._dbusservice.add_path('/Position', self._getP1Position()) # normaly only needed for pvinverter
+        self._dbusservice.add_path('/Role', 'grid' )
+        self._dbusservice.add_path('/Position', 0 ) # grid
         self._dbusservice.add_path('/Serial', self._getP1Serial())
         self._dbusservice.add_path('/UpdateIndex', 0)
         
@@ -101,25 +91,10 @@ class DbusHomeWizzardEnergyP1Service:
         
         return int(value)
 
-    def _getP1Position(self):
-        config = self._getConfig()
-        value = config['DEFAULT']['Position']
-        
-        if not value: 
-            value = 0
-        
-        return int(value)
-
 
     def _getP1StatusUrl(self):
         config = self._getConfig()
-        accessType = config['DEFAULT']['AccessType']
-        
-        if accessType == 'OnPremise': 
-            URL = "http://%s/api/v1/data" % (config['ONPREMISE']['Host'])
-            # URL = URL.replace(":@", "")
-        else:
-            raise ValueError("AccessType %s is not supported" % (config['DEFAULT']['AccessType']))
+        URL = "http://%s/api/v1/data" % (config['DEFAULT']['Host'])
         
         return URL
   
@@ -154,30 +129,14 @@ class DbusHomeWizzardEnergyP1Service:
             meter_data = self._getP1Data()
             config = self._getConfig()
 
-            # No remapping possible!
-            # try:
-            #     remapL1 = int(config['ONPREMISE']['L1Position'])
-            # except KeyError:
-            #     remapL1 = 1
-
-            # if remapL1 > 1:
-            #     old_l1 = meter_data['emeters'][0]
-            #     meter_data['emeters'][0] = meter_data['emeters'][remapL1-1]
-            #     meter_data['emeters'][remapL1-1] = old_l1
             phases = config['DEFAULT']['Phases']
 
             if phases == '1':
                 #send data to DBus for 3pahse system
                 self._dbusservice['/Ac/Power'] = meter_data['active_power_w']
                 self._dbusservice['/Ac/L1/Voltage'] = meter_data['active_voltage_l1_v']
-                # self._dbusservice['/Ac/L2/Voltage'] = meter_data['active_voltage_l2_v']
-                # self._dbusservice['/Ac/L3/Voltage'] = meter_data['active_voltage_l3_v']
                 self._dbusservice['/Ac/L1/Current'] = meter_data['active_current_l1_a']
-                # self._dbusservice['/Ac/L2/Current'] = meter_data['active_current_l2_a']
-                # self._dbusservice['/Ac/L3/Current'] = meter_data['active_current_l3_a']
                 self._dbusservice['/Ac/L1/Power'] = meter_data['active_power_l1_w']
-                # self._dbusservice['/Ac/L2/Power'] = meter_data['active_power_l1_w']
-                # self._dbusservice['/Ac/L3/Power'] = meter_data['active_power_l1_w']
                 self._dbusservice['/Ac/Energy/Forward'] = (meter_data['total_power_import_kwh']/1000)
                 self._dbusservice['/Ac/Energy/Reverse'] = (meter_data['total_power_export_kwh']/1000)
                 self._dbusservice['/Ac/L1/Energy/Forward'] = (meter_data['total_power_import_kwh']/1000)
@@ -196,25 +155,8 @@ class DbusHomeWizzardEnergyP1Service:
                 self._dbusservice['/Ac/L3/Power'] = meter_data['active_power_l3_w']
                 self._dbusservice['/Ac/Energy/Forward'] = (meter_data['total_power_import_kwh']/1000)
                 self._dbusservice['/Ac/Energy/Reverse'] = (meter_data['total_power_export_kwh']/1000)
-                # self._dbusservice['/Ac/L1/Energy/Forward'] = (meter_data['emeters'][0]['total']/1000)
-                # self._dbusservice['/Ac/L2/Energy/Forward'] = (meter_data['emeters'][1]['total']/1000)
-                # self._dbusservice['/Ac/L3/Energy/Forward'] = (meter_data['emeters'][2]['total']/1000)
-                # self._dbusservice['/Ac/L1/Energy/Reverse'] = (meter_data['emeters'][0]['total_returned']/1000) 
-                # self._dbusservice['/Ac/L2/Energy/Reverse'] = (meter_data['emeters'][1]['total_returned']/1000) 
-                # self._dbusservice['/Ac/L3/Energy/Reverse'] = (meter_data['emeters'][2]['total_returned']/1000) 
 
-            # Old version
-            #self._dbusservice['/Ac/Energy/Forward'] = self._dbusservice['/Ac/L1/Energy/Forward'] + self._dbusservice['/Ac/L2/Energy/Forward'] + self._dbusservice['/Ac/L3/Energy/Forward']
-            #self._dbusservice['/Ac/Energy/Reverse'] = self._dbusservice['/Ac/L1/Energy/Reverse'] + self._dbusservice['/Ac/L2/Energy/Reverse'] + self._dbusservice['/Ac/L3/Energy/Reverse'] 
-            
-            # New Version - from xris99
-            #Calc = 60min * 60 sec / 0.500 (refresh interval of 500ms) * 1000
-            # if (self._dbusservice['/Ac/Power'] > 0):
-            #     self._dbusservice['/Ac/Energy/Forward'] = self._dbusservice['/Ac/Energy/Forward'] + (self._dbusservice['/Ac/Power']/(60*60/0.5*1000))            
-            # if (self._dbusservice['/Ac/Power'] < 0):
-            #     self._dbusservice['/Ac/Energy/Reverse'] = self._dbusservice['/Ac/Energy/Reverse'] + (self._dbusservice['/Ac/Power']*-1/(60*60/0.5*1000))
-
-            
+           
             #logging
             logging.debug("House Consumption (/Ac/Power): %s" % (self._dbusservice['/Ac/Power']))
             logging.debug("House Forward (/Ac/Energy/Forward): %s" % (self._dbusservice['/Ac/Energy/Forward']))
@@ -243,9 +185,6 @@ class DbusHomeWizzardEnergyP1Service:
         logging.debug("someone else updated %s to %s" % (path, value))
         return True # accept the change
 
-  
-  
-  
   
 def getLogLevel():
     config = configparser.ConfigParser()
@@ -285,7 +224,7 @@ def main():
         
         #start our main-service
         
-        pvac_output = DbusHomeWizzardEnergyP1Service(
+        pvac_output = DbusHomewizardEnergyP1Service(
             paths={
                 '/Ac/Energy/Forward': {'initial': 0, 'textformat': _kwh}, # energy bought from the grid
                 '/Ac/Energy/Reverse': {'initial': 0, 'textformat': _kwh}, # energy sold to the grid
@@ -303,12 +242,7 @@ def main():
                 '/Ac/L1/Power': {'initial': 0, 'textformat': _w},
                 '/Ac/L2/Power': {'initial': 0, 'textformat': _w},
                 '/Ac/L3/Power': {'initial': 0, 'textformat': _w},
-                # '/Ac/L1/Energy/Forward': {'initial': 0, 'textformat': _kwh},
-                # '/Ac/L2/Energy/Forward': {'initial': 0, 'textformat': _kwh},
-                # '/Ac/L3/Energy/Forward': {'initial': 0, 'textformat': _kwh},
-                # '/Ac/L1/Energy/Reverse': {'initial': 0, 'textformat': _kwh},
-                # '/Ac/L2/Energy/Reverse': {'initial': 0, 'textformat': _kwh},
-                # '/Ac/L3/Energy/Reverse': {'initial': 0, 'textformat': _kwh},
+                
                 })
         logging.info('Connected to dbus, and switching over to gobject.MainLoop() (= event based)')
         mainloop = gobject.MainLoop()
