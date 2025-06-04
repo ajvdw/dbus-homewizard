@@ -30,10 +30,8 @@ So what is the script doing:
 Thats it 😄
 
 ### Pictures
-![Tile Overview](media/VenusOs_Overview.png)
-![Remote Console - Overview](media/VenusOs_DeviceList.png) 
-![SmartMeter - Values](media/VenusOs_P1.png)
-![SmartMeter - Device Details](media/VenusOs_Service.png)
+![Tile Overview](media/overview.png)
+![Tile Detail](media/detail.png)
 
 ## Install & Configuration
 ### Get the code
