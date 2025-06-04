@@ -132,7 +132,7 @@ class DbusHomewizardEnergyP1Service:
             phases = config['DEFAULT']['Phases']
 
             if phases == '1':
-                #send data to DBus for 3pahse system
+                #send data to DBus for 1phase system
                 self._dbusservice['/Ac/Power'] = meter_data['active_power_w']
                 self._dbusservice['/Ac/L1/Voltage'] = meter_data['active_voltage_l1_v']
                 self._dbusservice['/Ac/L1/Current'] = meter_data['active_current_l1_a']
@@ -142,7 +142,7 @@ class DbusHomewizardEnergyP1Service:
                 self._dbusservice['/Ac/L1/Energy/Forward'] = (meter_data['total_power_import_kwh']/1000)
                 self._dbusservice['/Ac/L1/Energy/Reverse'] = (meter_data['total_power_export_kwh']/1000) 
             if phases == '3':
-                #send data to DBus for 3pahse system
+                #send data to DBus for 3phahse system
                 self._dbusservice['/Ac/Power'] = meter_data['active_power_w']
                 self._dbusservice['/Ac/L1/Voltage'] = meter_data['active_voltage_l1_v']
                 self._dbusservice['/Ac/L2/Voltage'] = meter_data['active_voltage_l2_v']
@@ -194,7 +194,7 @@ def getLogLevel():
     if logLevelString:
         level = logging.getLevelName(logLevelString)
     else:
-        level = logging.INFO
+        level = logging.WARNING
         
     return level
 
