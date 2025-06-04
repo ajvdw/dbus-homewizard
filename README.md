@@ -1,4 +1,4 @@
-# DBus-Homewizard
+# DBus-Homewizard-P1
 Integrate Homewizard Energy P1 meter into [Victron Energies Venus OS](https://github.com/victronenergy/venus)
 
 ## Purpose
