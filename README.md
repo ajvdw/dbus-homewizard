@@ -5,7 +5,8 @@ Integrate Homewizard Energy P1 meter into [Victron Energies Venus OS](https://gi
 With the scripts in this repo it should be easy possible to install, uninstall, restart a service that integrates Homewizard P1 meter into VenusOS and GX devices from Victron.
 
 
-## Inspiration
+## Inspiration and based on
+- https://github.com/back2basic/dbus-Home-Wizzard-Energy-P1
 - https://github.com/fabian-lauer/dbus-shelly-3em-smartmeter
 
 ## How it works
@@ -29,10 +30,10 @@ So what is the script doing:
 Thats it 😄
 
 ### Pictures
-![Tile Overview](img/VenusOs_Overview.png)
-![Remote Console - Overview](img/VenusOs_DeviceList.png) 
-![SmartMeter - Values](img/VenusOs_P1.png)
-![SmartMeter - Device Details](img/VenusOs_Service.png)
+![Tile Overview](media/VenusOs_Overview.png)
+![Remote Console - Overview](media/VenusOs_DeviceList.png) 
+![SmartMeter - Values](media/VenusOs_P1.png)
+![SmartMeter - Device Details](media/VenusOs_Service.png)
 
 ## Install & Configuration
 ### Get the code
