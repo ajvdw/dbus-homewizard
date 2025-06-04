@@ -1,0 +1,37 @@
+// http://192.168.1.240/api/v1/data
+{
+   "wifi_ssid":"MYNETWORK",
+   "wifi_strength":100,
+   "smr_version":50,
+   "meter_model":"Landis + Gyr GF0010443123456",
+   "unique_id":"4530303532303034333831383112345638",
+   "active_tariff":2,
+   "total_power_import_kwh":35088.998,
+   "total_power_import_t1_kwh":18816.067,
+   "total_power_import_t2_kwh":16272.931,
+   "total_power_export_kwh":25945.625,
+   "total_power_export_t1_kwh":7381.258,
+   "total_power_export_t2_kwh":18564.367,
+   "active_power_w":-4793.000,
+   "active_power_l1_w":-1609.000,
+   "active_power_l2_w":-1599.000,
+   "active_power_l3_w":-1585.000,
+   "active_voltage_l1_v":244.400,
+   "active_voltage_l2_v":244.800,
+   "active_voltage_l3_v":245.100,
+   "active_current_a":19.582,
+   "active_current_l1_a":-6.583,
+   "active_current_l2_a":-6.532,
+   "active_current_l3_a":-6.467,
+   "voltage_sag_l1_count":33.000,
+   "voltage_sag_l2_count":31.000,
+   "voltage_sag_l3_count":41.000,
+   "voltage_swell_l1_count":5.000,
+   "voltage_swell_l2_count":1.000,
+   "voltage_swell_l3_count":0.000,
+   "any_power_fail_count":9.000,
+   "long_power_fail_count":15.000,
+   "external":[
+      
+   ]
+}
